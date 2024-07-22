@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>BackkendPractice</title>
+        <link rel="stylesheet" type="text/css" href="/static/index.css"/>
+    </head>
+    <body>
+        <h5 class="form-title">發表圖文</h5>
+        <div class="form-group">
+            <label class="form-group__label">文字內容</label>
+            <input class="form-group__input" type="text" placeholder="輸入文字內容">
+        </div>
+        <div class="form-group">
+            <label class="form-group__label">圖片檔案</label>
+            <input type="file" id="file-input" class="form-group__file-input">
+            <label for="file-input" class="form-group__file-label">Choose File</label>
+            <div class="form-group__file-status">no file chosen</div>
+        </div>
+        <div class="form-submit">
+            <button class="form-submit__button">送出</button>
+            <div class="status-display"></div>
+        </div>
+        <div class="message-display"></div>
+    <script src="/static/index.js" defer></script>
+    </body>
+</html>
