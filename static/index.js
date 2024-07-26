@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () =>{
             method:"GET",
         })
         .then(response =>{
+            // console.log(response);
             if(!response.ok){
                 postsDisplay.textContent = "載入 POST 錯誤";
                 return;
@@ -23,7 +24,8 @@ document.addEventListener("DOMContentLoaded", () =>{
                 postsDisplay.innerHTML = ""; 
                 data.data.forEach(post => {
                     const postText = post.text;
-                    const postImage = post.image;
+                    const postImage = post.image_url;
+                    // console.log(post);
 
                     const postDisplay = document.createElement("div");
                     postDisplay.className = "message-display__block";
@@ -46,37 +48,35 @@ document.addEventListener("DOMContentLoaded", () =>{
             postsDisplay.textContent = "載入 POST 錯誤: " + error.message;
         });
     };
-    
-    const savePost = () =>{
-        const request = {
-            text: postTextInput.value,
-            image: postImageInput.files.length > 0 ? URL.createObjectURL(postImageInput.files[0]) : ""
-        };
 
-        if (!request.text || !request.image) {
+    const savePost = () => {
+        const formData = new FormData();
+        formData.append("text", postTextInput.value);
+        formData.append("image", postImageInput.files[0]);
+
+        // for (var pair of formData.entries()) {
+        //     console.log(pair[0]+ ', ' + pair[1]); 
+        // }
+
+        if (!postTextInput.value || !postImageInput.files.length) {
             statusDisplay.textContent = "請輸入文字或選擇圖片";
             statusDisplay.style.display = "block";
             return;
         }
 
         fetch("/api/post", {
-            method:"POST",
-            headers:{
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(request)
+            method: "POST",
+            body: formData
         })
-        .then(response =>{
-            if(!response.ok){
+        .then(response => {
+            if (!response.ok) {
                 statusDisplay.textContent = "儲存 POST 錯誤";
                 statusDisplay.style.display = "block";
                 return;
             }
             return response.json();
         })
-        .then(data =>{
-            console.log(request);
-            console.log(data);
+        .then(data => {
             if (data && data.success) {
                 loadPosts();
                 postTextInput.value = "";
@@ -88,11 +88,12 @@ document.addEventListener("DOMContentLoaded", () =>{
                 statusDisplay.style.display = "block";
             }
         })
-        .catch(error =>{
+        .catch(error => {
             statusDisplay.textContent = "儲存 POST 錯誤: " + error.message;
             statusDisplay.style.display = "block";
-        });  
+        });
     };
+    
 
     postImageInput.addEventListener("change", () => {
         if (postImageInput.files.length > 0) {
