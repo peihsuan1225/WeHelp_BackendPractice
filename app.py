@@ -39,6 +39,7 @@ DATABASE = {
     'password': os.getenv('DB_PASSWORD'),
     'db': os.getenv('DB_NAME'),
 }
+print(DATABASE)
 
 async def get_db_connection():
     return await aiomysql.connect(
