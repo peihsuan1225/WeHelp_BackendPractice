@@ -113,3 +113,7 @@ async def get_post_info():
 @app.get("/", response_class=FileResponse)
 async def get_html():
     return FileResponse("static/index.html", media_type="text/html")
+
+@app.get("/loaderio-1e0e9c475b1b9a302573acd757fc2d19.txt")
+def serve_loaderio():
+    return FileResponse("loaderio-1e0e9c475b1b9a302573acd757fc2d19.txt")
