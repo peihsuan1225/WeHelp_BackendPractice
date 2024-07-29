@@ -55,8 +55,8 @@ async def get_db_connection():
 async def save_post_info(text: str = Form(...), image: UploadFile = File(...)):
     taiwan_tz = pytz.timezone('Asia/Taipei')
     taiwan_time = datetime.now(taiwan_tz).strftime('%Y-%m-%d %H:%M:%S')
-    # print(f"Received text: {text}")
-    # print(f"Received image: {image.filename}")
+    print(f"Received text: {text}")
+    print(f"Received image: {image.filename}")
 
     if not text or not image:
         result = {"error": True, "message": "獲取 Post 內容失敗"}
@@ -104,7 +104,7 @@ async def get_post_info():
             # print(result)
             return JSONResponse(content=result, status_code=200)
     except Exception as e:
-        # print(f"Error: {e}")
+        print(f"Error: {e}")
         result = {"error": True, "message": f"獲取 Post 內容失敗: {str(e)}"}
         return JSONResponse(content=result, status_code=500)
 

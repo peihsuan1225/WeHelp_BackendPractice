@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () =>{
             method:"GET",
         })
         .then(response =>{
-            // console.log(response);
+            console.log(response);
             if(!response.ok){
                 postsDisplay.textContent = "載入 POST 錯誤";
                 return;
@@ -54,9 +54,9 @@ document.addEventListener("DOMContentLoaded", () =>{
         formData.append("text", postTextInput.value);
         formData.append("image", postImageInput.files[0]);
 
-        // for (var pair of formData.entries()) {
-        //     console.log(pair[0]+ ', ' + pair[1]); 
-        // }
+        for (var pair of formData.entries()) {
+            console.log(pair[0]+ ', ' + pair[1]); 
+        }
 
         if (!postTextInput.value || !postImageInput.files.length) {
             statusDisplay.textContent = "請輸入文字或選擇圖片";
