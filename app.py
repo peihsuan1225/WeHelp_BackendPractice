@@ -8,6 +8,10 @@ import boto3
 import uuid
 import aiomysql
 import pytz
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 app = FastAPI()
 
@@ -16,8 +20,8 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 s3_client = boto3.client(
     's3',
-    aws_access_key_id='AKIA5FTY65H7FN2FPL4G',
-    aws_secret_access_key='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',
+    aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'),
+    aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY'),
     region_name='us-west-1'
 )
 bucket_name = 'wehelp-backendpractice'
@@ -29,11 +33,11 @@ class postRequest(BaseModel):
 posts = []
 
 DATABASE = {
-    'host': 'database-1.czmssmmqmyi7.us-west-1.rds.amazonaws.com',
-    'port': 3306,
-    'user': 'admin',
-    'password': 'OAfqTdZqCCeD3AluhyJz',
-    'db': 'posts_db',
+    'host': os.getenv('DB_HOST'),
+    'port': int(os.getenv('DB_PORT')),
+    'user': os.getenv('DB_USER'),
+    'password': os.getenv('DB_PASSWORD'),
+    'db': os.getenv('DB_NAME'),
 }
 
 async def get_db_connection():
