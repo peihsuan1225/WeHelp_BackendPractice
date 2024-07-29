@@ -12,10 +12,11 @@ document.addEventListener("DOMContentLoaded", () =>{
             method:"GET",
         })
         .then(response =>{
-            console.log(response);
+            // console.log(response);
             if(!response.ok){
-                postsDisplay.textContent = "載入 POST 錯誤";
-                return;
+                return response.text().then(errorText => {
+                    postsDisplay.textContent = `載入 POST 錯誤: ${errorText}`;
+                });
             }
             return response.json();
         })
@@ -54,15 +55,19 @@ document.addEventListener("DOMContentLoaded", () =>{
         formData.append("text", postTextInput.value);
         formData.append("image", postImageInput.files[0]);
 
-        for (var pair of formData.entries()) {
-            console.log(pair[0]+ ', ' + pair[1]); 
-        }
+        // for (var pair of formData.entries()) {
+        //     console.log(pair[0]+ ', ' + pair[1]); 
+        // }
 
         if (!postTextInput.value || !postImageInput.files.length) {
             statusDisplay.textContent = "請輸入文字或選擇圖片";
             statusDisplay.style.display = "block";
             return;
         }
+
+        statusDisplay.textContent = "正在上傳中...";
+        statusDisplay.style.display = "block";
+        statusDisplay.style.color = "gray";
 
         fetch("/api/post", {
             method: "POST",
@@ -91,7 +96,12 @@ document.addEventListener("DOMContentLoaded", () =>{
         .catch(error => {
             statusDisplay.textContent = "儲存 POST 錯誤: " + error.message;
             statusDisplay.style.display = "block";
-        });
+        })
+        .finally(() => {
+            if (statusDisplay.textContent !== "儲存 POST 錯誤: " + error.message) {
+                statusDisplay.style.display = "none";
+            }
+        });        
     };
     
 
