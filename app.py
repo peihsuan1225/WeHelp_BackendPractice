@@ -114,6 +114,6 @@ async def get_post_info():
 async def get_html():
     return FileResponse("static/index.html", media_type="text/html")
 
-@app.get("/loaderio-1e0e9c475b1b9a302573acd757fc2d19.txt")
+@app.get("/loaderio-40abfc22841e8a3c1d74c14fca5bf0e9.txt")
 def serve_loaderio():
-    return FileResponse("loaderio-1e0e9c475b1b9a302573acd757fc2d19.txt")
+    return FileResponse("loaderio-40abfc22841e8a3c1d74c14fca5bf0e9.txt")
